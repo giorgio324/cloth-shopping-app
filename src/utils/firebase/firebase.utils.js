@@ -1,3 +1,4 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import {
   getAuth,
@@ -6,34 +7,32 @@ import {
   GoogleAuthProvider,
 } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyADFEN0JgGmShSj6wR6rqVau2qVpFPLK2k',
-  authDomain: 'crown-clothing-db-2bbae.firebaseapp.com',
-  projectId: 'crown-clothing-db-2bbae',
-  storageBucket: 'crown-clothing-db-2bbae.appspot.com',
-  messagingSenderId: '340425502453',
-  appId: '1:340425502453:web:47a20384b3f715be7a5fbc',
+  apiKey: 'AIzaSyDLpfNyKefJZusR5zOQCMfQyFDIxmk_mIo',
+  authDomain: 'cloth-shop-bed70.firebaseapp.com',
+  projectId: 'cloth-shop-bed70',
+  storageBucket: 'cloth-shop-bed70.appspot.com',
+  messagingSenderId: '787483031039',
+  appId: '1:787483031039:web:20b82f92c8635f0e3423ca',
 };
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
-
+// create provider
 const provider = new GoogleAuthProvider();
-
 provider.setCustomParameters({
   prompt: 'select_account',
 });
-
+// export variables/functions
 export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
-
 export const db = getFirestore();
-
 export const createUserDocumentFromAuth = async (userAuth) => {
   const userDocRef = doc(db, 'users', userAuth.uid);
   const userSnapshot = await getDoc(userDocRef);
-  console.log(userSnapshot);
-  // if user does not exits
+  // if user already exists then return userDocRef
+  // if user does not exist then create / set the document with data from userAuth in my collenction
   if (!userSnapshot.exists()) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
@@ -48,5 +47,4 @@ export const createUserDocumentFromAuth = async (userAuth) => {
     }
   }
   return userDocRef;
-  // if user data exists
 };
