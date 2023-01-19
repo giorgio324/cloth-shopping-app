@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
+
 import {
   signInWithGooglePopup,
   createUserDocumentFromAuth,
@@ -14,21 +15,14 @@ const defaultFormFields = {
 const SignInForm = (props) => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
-  const resetFormFields = () => {
-    setFormFields(defaultFormFields);
-  };
+
   const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
+    await signInWithGooglePopup();
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await signInAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
-      console.log(response);
+      await signInAuthUserWithEmailAndPassword(email, password);
     } catch (error) {
       if (error.code === 'auth/user-not-found') {
         alert('This user does not exist');
@@ -67,11 +61,7 @@ const SignInForm = (props) => {
         />
         <div className='buttons-container'>
           <Button type='submit'>sign-in</Button>
-          <Button
-            type='button'
-            buttonType='google'
-            onClick={signInWithGooglePopup}
-          >
+          <Button type='button' buttonType='google' onClick={signInWithGoogle}>
             GOOGLE Sign in
           </Button>
         </div>
