@@ -48,6 +48,7 @@ export const signInWithGooglePopup = () =>
 
 export const db = getFirestore();
 
+// this function is used to add the data to the firestore database
 export const addCollectionAndDocuments = async (
   collectionKey,
   objectsToAdd
@@ -61,7 +62,7 @@ export const addCollectionAndDocuments = async (
   });
   await batch.commit();
 };
-
+// this function is used to get the data from the firestore database
 export const getCategoriesAndDocuments = async () => {
   const collectionRef = collection(db, 'categories');
   const q = query(collectionRef);
